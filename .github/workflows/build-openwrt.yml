@@ -42,12 +42,12 @@ jobs:
     # 为任务(job)命名
     name: Build OpenWrt
     # 指定任务(job)运行所需要的虚拟服务器环境，是必填字段，如：runs-on: ubuntu-latest
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     # 为任务(job-Build OpenWrt)指定一系列步骤(step)
     # 步骤(step)中 uses 和 run 是必填字段，每个步骤只能有其一。同样名称也是可以忽略的。
     steps:
     - name: Checkout
-      uses: actions/checkout@main
+      uses: actions/checkout@v3
 
     - name: Initialization environment
       env:
@@ -55,7 +55,6 @@ jobs:
         # 直接运行命令，而无需向用户请求输入（所有操作都是非交互式的）
       # 此管道符用于声明这个步骤(step)运行多行命令 
       run: |
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
         sudo -E apt-get -qq autoremove --purge
