@@ -42,7 +42,7 @@ jobs:
     # 为任务(job)命名
     name: Build OpenWrt
     # 指定任务(job)运行所需要的虚拟服务器环境，是必填字段，如：runs-on: ubuntu-latest
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     # 为任务(job-Build OpenWrt)指定一系列步骤(step)
     # 步骤(step)中 uses 和 run 是必填字段，每个步骤只能有其一。同样名称也是可以忽略的。
     steps:
