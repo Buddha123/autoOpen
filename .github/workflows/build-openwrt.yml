@@ -8,20 +8,15 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-# name 是 workflow 的名称。若忽略此字段，则默认会设置为 workflow 文件名。
 name: Build OpenWrt
-# 指定 workflow 的触发条件
 on:
   repository_dispatch:
-  # 用于开启和配置工作流程(workflow)的 Run workflow 按钮。且若要启用手动触发工作流(workflow)，需要配置 workflow_dispatch 事件
   workflow_dispatch:
-    # 为工作流程(workflow)配置输入，此处意为是否开启 ssh，非必填，默认是 false，有需要的话可以填 true
     inputs:
       ssh:
         description: 'SSH connection to Actions'
         required: false
         default: 'false'
-# 整个工作流程(workflow)都可以使用的环境变量
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
@@ -35,16 +30,10 @@ env:
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
-# 表示要执行的一项或多项任务(job)
 jobs:
-  # 第一个任务(job)
   build:
-    # 为任务(job)命名
     name: Build OpenWrt
-    # 指定任务(job)运行所需要的虚拟服务器环境，是必填字段，如：runs-on: ubuntu-latest
     runs-on: ubuntu-20.04
-    # 为任务(job-Build OpenWrt)指定一系列步骤(step)
-    # 步骤(step)中 uses 和 run 是必填字段，每个步骤只能有其一。同样名称也是可以忽略的。
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -52,8 +41,6 @@ jobs:
     - name: Initialization environment
       env:
         DEBIAN_FRONTEND: noninteractive
-        # 直接运行命令，而无需向用户请求输入（所有操作都是非交互式的）
-      # 此管道符用于声明这个步骤(step)运行多行命令 
       run: |
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
@@ -64,8 +51,6 @@ jobs:
         sudo chown $USER:$GROUPS /workdir
 
     - name: Clone source code
-    # 每个 run 关键字代表运行器环境中一个新的进程和 shell。
-      # 进入上一个步骤创建的目录
       working-directory: /workdir
       run: |
         df -hT $PWD
