@@ -3,3 +3,7 @@
 #
 
 name: Build AMD64 LEDE 
+
+# Add a button to trigger the workflow manually
+on: 
+ workflow_dispatch:
