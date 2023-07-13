@@ -26,5 +26,11 @@ jobs:
    - name: 下载源代码
      run: git clone https://github.com/coolsnowwolf/lede
      
+   - name: 更新并安装 feeds
+     run: |
+      cd lede
+      ./scripts/feeds update -a
+      ./scripts/feeds install -a
+     
    - name: 查看可用磁盘空间
      run: df -hT $PWD
