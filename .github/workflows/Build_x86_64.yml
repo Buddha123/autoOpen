@@ -7,3 +7,11 @@ name: Build AMD64 LEDE
 # Add a button to trigger the workflow manually
 on: 
  workflow_dispatch:
+ 
+# A series of steps
+jobs:
+ build_OpenWrt:
+  runs-on: ubuntu-latest
+  
+  steps:
+   - uses: actions/checkout@main
