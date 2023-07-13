@@ -2,7 +2,7 @@
 # A Test Workflow for Building OpenWrt
 #
 
-name: build lede for amd64 
+name: Build lede for amd64 
 
 # Add a button to trigger the workflow manually
 on: 
