@@ -10,8 +10,12 @@ on:
  
 # A series of steps
 jobs:
- build_OpenWrt:
+ Build_LEDE:
   runs-on: ubuntu-latest
   
   steps:
-   - uses: actions/checkout@main
+   - name: Checkout
+     uses: actions/checkout@main
+     
+   - name: uname
+     run: uname -a
