@@ -34,5 +34,8 @@ jobs:
       ./scripts/feeds update -a
       ./scripts/feeds install -a
      
+   - name: 使用ssh连接GitHub Actions服务器
+     uses: csexton/debugger-action@master
+     
    - name: 查看可用磁盘空间
      run: df -hT $PWD
