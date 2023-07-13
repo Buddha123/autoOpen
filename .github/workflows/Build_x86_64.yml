@@ -17,5 +17,10 @@ jobs:
    - name: Checkout
      uses: actions/checkout@main
      
-   - name: uname
-     run: uname -a
+   - name: looklook
+     run: |
+      sudo apt-get update -y
+      sudo apt-get full-upgrade -y
+      sudo apt-get install neofetch -y
+      neofetch
+      whoami
