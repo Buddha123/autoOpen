@@ -2,7 +2,7 @@
 # A Test Workflow for Building OpenWrt
 #
 
-name: Build LEDE AMD64 
+name: Build LEDE FOR AMD64 
 
 # Add a button to trigger the workflow manually
 on: 
@@ -10,7 +10,7 @@ on:
  
 # A series of steps
 jobs:
- Build_LEDE:
+ Build_LEDE_AMD64:
   runs-on: ubuntu-latest
   
   steps:
