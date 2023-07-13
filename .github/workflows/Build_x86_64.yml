@@ -2,7 +2,7 @@
 # A Test Workflow for Building OpenWrt
 #
 
-name: Build AMD64 LEDE 
+name: Build LEDE AMD64 
 
 # Add a button to trigger the workflow manually
 on: 
