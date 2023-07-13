@@ -36,6 +36,11 @@ jobs:
      
    - name: 使用ssh连接GitHub Actions服务器
      uses: csexton/debugger-action@master
+   - name: 上传config
+     uses: actions/upload-artifact@v3
+     with:
+      name: my-artifact
+      path: lede/.config
      
-   - name: 查看可用磁盘空间
-     run: df -hT $PWD
+#   - name: 查看可用磁盘空间
+#     run: df -hT $PWD
