@@ -36,9 +36,9 @@ jobs:
       git clone --depth 1 https://github.com/jerrykuku/luci-theme-argon.git
       git clone --depth 1 https://github.com/jerrykuku/luci-app-argon-config.git
      
-   - name: 添加 passwall 插件
-     working-directory: ./openwrt/package
-     run: git clone https://github.com/xiaorouji/openwrt-passwall
+#   - name: 添加 passwall 插件
+#     working-directory: ./openwrt/package
+#     run: git clone https://github.com/xiaorouji/openwrt-passwall
      
    - name: 添加 helloworld 插件
      working-directory: ./openwrt/package
