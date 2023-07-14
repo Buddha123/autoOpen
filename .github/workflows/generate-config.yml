@@ -38,7 +38,7 @@ jobs:
      
    - name: 添加 openclash
      working-directory: ./lede/package
-     run: git clone https://github.com/vernesong/OpenClash/luci-app-openclash luci-app-openclash
+     run: git clone https://github.com/vernesong/OpenClash/tree/master/luci-app-openclash luci-app-openclash
 
      # 复制ssh命令到终端
      # touch /tmp/keepalive，关闭15分钟超时
@@ -50,5 +50,5 @@ jobs:
    - name: 上传 config 到 artifact
      uses: actions/upload-artifact@v3
      with:
-      name: my-config
+      name: Config file
       path: lede/.config
