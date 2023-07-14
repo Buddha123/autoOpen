@@ -20,9 +20,9 @@ jobs:
             
    - name: 下载源代码
      env:
-      REPO_URL: https://git.openwrt.org/openwrt/openwrt.git
+      REPO_URL: https://github.com/openwrt/openwrt.git
       REPO_BRANCH: openwrt-22.03
-     run: git clone --depth 1 -b REPO_BRANCH $REPO_URL openwrt
+     run: git clone --depth 1 -b $REPO_BRANCH $REPO_URL openwrt
      
    - name: 更新 feeds
      working-directory: ./openwrt
