@@ -38,7 +38,15 @@ jobs:
      
    - name: 添加 openclash
      working-directory: ./lede/package
-     run: git clone https://github.com/vernesong/OpenClash/tree/master/luci-app-openclash luci-app-openclash
+     run: |
+      mkdir luci-app-openclash
+      cd luci-app-openclash
+      git init
+      git remote add -f origin https://github.com/vernesong/OpenClash.git
+      git config core.sparsecheckout true
+      echo "luci-app-openclash" >> .git/info/sparse-checkout
+      git pull origin master
+      git branch --set-upstream-to=origin/master master
 
      # 复制ssh命令到终端
      # touch /tmp/keepalive，关闭15分钟超时
