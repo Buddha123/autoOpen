@@ -32,11 +32,13 @@ jobs:
       
    - name: 添加 argon 主题
      working-directory: ./openwrt/package
-     run: git clone --depth 1 https://github.com/jerrykuku/luci-theme-argon.git
+     run: | 
+      git clone --depth 1 https://github.com/jerrykuku/luci-theme-argon.git
+      git clone --depth 1 https://github.com/jerrykuku/luci-app-argon-config.git
      
    - name: 添加 passwall 插件
      working-directory: ./openwrt/package
-     run: git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall.git
+     run: git clone https://github.com/xiaorouji/openwrt-passwall
      
    - name: 添加 helloworld 插件
      working-directory: ./openwrt/package
