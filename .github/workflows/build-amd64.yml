@@ -2,7 +2,7 @@
 # A Test Workflow for Building OpenWrt
 #
 
-name: Build lede for amd64 
+name: Build OpenWrt for amd64 
 
 # Add a button to trigger the workflow manually
 on: 
@@ -10,7 +10,7 @@ on:
  
 # A series of steps
 jobs:
- build_lede_amd64:
+ build_OpenWrt_amd64:
   runs-on: ubuntu-latest
   
   steps:
@@ -32,47 +32,41 @@ jobs:
      run: git clone $REPO_URL
      
    - name: 更新并安装 feeds
-     working-directory: ./lede
+     working-directory: ./openwrt
      run: |
       ./scripts/feeds update -a
       ./scripts/feeds install -a
       
    - name: 添加 argon 主题
-     working-directory: ./lede/package/lean
-     run: |
-      rm -rf luci-theme-argon
-      git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git luci-theme-argon
+     working-directory: ./openwrt/package
+     run: | 
+      git clone --depth 1 https://github.com/jerrykuku/luci-theme-argon.git
+      git clone --depth 1 https://github.com/jerrykuku/luci-app-argon-config.git
      
-   - name: 添加 openclash
-     working-directory: ./lede/package
+   - name: 添加 helloworld 插件
+     working-directory: ./openwrt/package
      run: |
-      mkdir luci-app-openclash
-      cd luci-app-openclash
-      git init
-      git remote add -f origin https://github.com/vernesong/OpenClash.git
-      git config core.sparsecheckout true
-      echo "luci-app-openclash" >> .git/info/sparse-checkout
-      git pull origin master
-      git branch --set-upstream-to=origin/master master
+      rm -rf helloworld
+      git clone --depth=1 https://github.com/fw876/helloworld.git helloworld           
 
    - name: 使用自己的config
      env:
         CONFIG_FILE: 'amd64.config'
      run: |
-      [ -e $CONFIG_FILE ] && mv $CONFIG_FILE lede/.config
-      cd lede && make defconfig
+      [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+      cd openwrt && make defconfig
      
    - name: 下载 dl 库，编译固件
-     working-directory: ./lede
+     working-directory: ./openwrt
      run: |
       make download -j8
       make V=s -j$(nproc)
       
    - name : Upload artifact
-     uses: actions/upload-artifact@master
+     uses: actions/upload-artifact@v3
      with:
-      name: Lede
-      path: lede/bin/targets
+      name: OpenWrt
+      path: openwrt/bin/targets
         
 #   - name: 查看可用磁盘空间
 #     run: df -hT $PWD
