@@ -36,6 +36,24 @@ jobs:
      run: |
       ./scripts/feeds update -a
       ./scripts/feeds install -a
+      
+   - name: 添加 argon 主题
+     working-directory: ./lede/package/lean
+     run: |
+      rm -rf luci-theme-argon
+      git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git luci-theme-argon
+     
+   - name: 添加 openclash
+     working-directory: ./lede/package
+     run: |
+      mkdir luci-app-openclash
+      cd luci-app-openclash
+      git init
+      git remote add -f origin https://github.com/vernesong/OpenClash.git
+      git config core.sparsecheckout true
+      echo "luci-app-openclash" >> .git/info/sparse-checkout
+      git pull origin master
+      git branch --set-upstream-to=origin/master master
 
    - name: 使用自己的config
      env:
@@ -54,7 +72,7 @@ jobs:
      uses: actions/upload-artifact@master
      with:
       name: Lede
-      path: lede/bin
+      path: lede/bin/targets
         
 #   - name: 查看可用磁盘空间
 #     run: df -hT $PWD
