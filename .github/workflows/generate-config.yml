@@ -38,16 +38,16 @@ jobs:
      
    - name: 添加 openclash
      working-directory: ./lede/package
-     run: git clone https://github.com/vernesong/OpenClash/luci-app-openclash.git luci-app-openclash
+     run: git clone https://github.com/vernesong/OpenClash/luci-app-openclash luci-app-openclash
 
      # 复制ssh命令到终端
      # touch /tmp/keepalive，关闭15分钟超时
      # cd lede && make menuconfig，制作config
      # 制作完成后，exit退出ssh会话，以便进入下一阶段
-   - name: 使用ssh连接GitHub Actions服务器
+   - name: 使用 ssh 连接 GitHub Actions 服务器
      uses: csexton/debugger-action@master
      
-   - name: 上传config到artifact
+   - name: 上传 config 到 artifact
      uses: actions/upload-artifact@v3
      with:
       name: my-config
