@@ -1,10 +1,9 @@
-name: Build lede for amd64 
+name: Generate config file 
 
 # Add a button to trigger the workflow manually
 on: 
  workflow_dispatch:
  
-# A series of steps
 jobs:
  build_lede_amd64:
   runs-on: ubuntu-latest
