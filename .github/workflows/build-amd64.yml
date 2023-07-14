@@ -19,10 +19,13 @@ jobs:
      
    - name: 安装编译依赖
      run: |
+      docker rmi `docker images -q`
+      sudo apt purge -y azure-cli zulu* llvm* firefox powershell openjdk*
       sudo apt update -y
       sudo apt full-upgrade -y
       sudo apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pyelftools libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev python3-setuptools
-      
+      sudo apt clean -y
+
    - name: 下载源代码
      env:
       REPO_URL: https://github.com/coolsnowwolf/lede
@@ -33,14 +36,25 @@ jobs:
      run: |
       ./scripts/feeds update -a
       ./scripts/feeds install -a
+
+   - name: 使用自己的config
+     env:
+        CONFIG_FILE: 'amd64.config'
+     run: |
+      [ -e $CONFIG_FILE ] && mv $CONFIG_FILE lede/.config
+      cd lede && make defconfig
      
-   - name: 使用ssh连接GitHub Actions服务器
-     uses: csexton/debugger-action@master
-   - name: 上传config
-     uses: actions/upload-artifact@v3
+   - name: 下载 dl 库，编译固件
+     working-directory: ./lede
+     run: |
+      make download -j8
+      make V=s -j$(nproc)
+      
+   - name : Upload artifact
+     uses: actions/upload-artifact@master
      with:
-      name: my-artifact
-      path: lede/.config
-     
+      name: Lede
+      path: lede/bin
+        
 #   - name: 查看可用磁盘空间
 #     run: df -hT $PWD
