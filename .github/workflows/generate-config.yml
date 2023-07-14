@@ -30,6 +30,10 @@ jobs:
       ./scripts/feeds update -a
       ./scripts/feeds install -a
      
+     # 复制ssh命令到终端
+     # touch /tmp/keepalive，关闭15分钟超时
+     # cd lede && make menuconfig，制作config
+     # 制作完成后，exit退出ssh会话，以便进入下一阶段
    - name: 使用ssh连接GitHub Actions服务器
      uses: csexton/debugger-action@master
      
