@@ -36,17 +36,17 @@ jobs:
       ./scripts/feeds update -a
       ./scripts/feeds install -a
       
-   - name: 添加 argon 主题
-     working-directory: ./openwrt/package
-     run: | 
-      git clone --depth 1 https://github.com/jerrykuku/luci-theme-argon.git
-      git clone --depth 1 https://github.com/jerrykuku/luci-app-argon-config.git
-     
-   - name: 添加 helloworld 插件
-     working-directory: ./openwrt/package
-     run: |
-      rm -rf helloworld
-      git clone --depth=1 https://github.com/fw876/helloworld.git helloworld           
+#   - name: 添加 argon 主题
+#     working-directory: ./openwrt/package
+#     run: | 
+#      git clone --depth 1 https://github.com/jerrykuku/luci-theme-argon.git
+#      git clone --depth 1 https://github.com/jerrykuku/luci-app-argon-config.git
+#     
+#   - name: 添加 helloworld 插件
+#     working-directory: ./openwrt/package
+#     run: |
+#      rm -rf helloworld
+#      git clone --depth=1 https://github.com/fw876/helloworld.git helloworld           
 
    - name: 使用自己的 config
      env:
@@ -59,8 +59,6 @@ jobs:
      working-directory: ./openwrt
      run: |
       make download -j8
-      find dl -size -1024c -exec ls -l {} \;
-      find dl -size -1024c -exec rm -f {} \;
       make V=s -j$(nproc)
       
    - name : Upload artifact
