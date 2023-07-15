@@ -57,9 +57,7 @@ jobs:
      
    - name: 下载 dl 库，编译固件
      working-directory: ./openwrt
-     run: |
-      make download -j8
-      make V=s -j$(nproc)
+     run: make
       
    - name : Upload artifact
      uses: actions/upload-artifact@v3
