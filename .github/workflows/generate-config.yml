@@ -30,21 +30,21 @@ jobs:
       ./scripts/feeds update -a
       ./scripts/feeds install -a
       
-   - name: 添加 argon 主题
-     working-directory: ./openwrt/package
-     run: | 
-      git clone --depth 1 https://github.com/jerrykuku/luci-theme-argon.git
-      git clone --depth 1 https://github.com/jerrykuku/luci-app-argon-config.git
-     
+#   - name: 添加 argon 主题
+#     working-directory: ./openwrt/package
+#     run: | 
+#      git clone --depth 1 https://github.com/jerrykuku/luci-theme-argon.git
+#      git clone --depth 1 https://github.com/jerrykuku/luci-app-argon-config.git
+#     
 #   - name: 添加 passwall 插件
 #     working-directory: ./openwrt/package
 #     run: git clone https://github.com/xiaorouji/openwrt-passwall
-     
-   - name: 添加 helloworld 插件
-     working-directory: ./openwrt/package
-     run: |
-      rm -rf helloworld
-      git clone --depth=1 https://github.com/fw876/helloworld.git helloworld
+#     
+#   - name: 添加 helloworld 插件
+#     working-directory: ./openwrt/package
+#     run: |
+#      rm -rf helloworld
+#      git clone --depth=1 https://github.com/fw876/helloworld.git helloworld
 
      # 复制 ssh 命令到终端
      # touch /tmp/keepalive，关闭 15 分钟超时
