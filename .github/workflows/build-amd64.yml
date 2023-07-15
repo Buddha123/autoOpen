@@ -62,6 +62,9 @@ jobs:
      working-directory: ./openwrt
      run: |
       make download -j8
+      find dl -size -1024c -exec ls -l {} \;
+      find dl -size -1024c -exec rm -f {} \;
+      make package/kernel/button-hotplug/compile -j$(nproc)
       make V=s -j$(nproc)
       
    - name : Upload artifact
