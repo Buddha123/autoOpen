@@ -17,25 +17,27 @@ jobs:
    - name: Checkout
      uses: actions/checkout@v3
      
-   - name: 安装编译依赖
-     env:
-      DEBIAN_FRONTEND: noninteractive
+   - name: Requirements
      run: |
       docker rmi `docker images -q`
       sudo -E apt purge -y azure-cli zulu* llvm* firefox powershell openjdk*
       sudo -E apt update -y
       sudo -E apt install -y build-essential clang flex bison g++ gawk gcc-multilib g++-multilib gettext git libncurses-dev libssl-dev python3-distutils rsync unzip zlib1g-dev file wget
             
-   - name: 下载源代码
+   - name: Source code
      env:
       REPO_URL: https://github.com/openwrt/openwrt.git
       REPO_BRANCH: openwrt-22.03
      run: git clone --depth 1 -b $REPO_BRANCH $REPO_URL openwrt
      
-   - name: 更新并安装 feeds
+   - name: Update feeds
      working-directory: ./openwrt
      run: |
       ./scripts/feeds update -a
+      
+   - name: Install feeds
+     working-directory: ./openwrt
+     run: |
       ./scripts/feeds install -a
       
 #   - name: 添加 argon 主题
@@ -50,21 +52,21 @@ jobs:
 #      rm -rf helloworld
 #      git clone --depth=1 https://github.com/fw876/helloworld.git helloworld           
 
-   - name: 使用自己的 config
-     env:
-        CONFIG_FILE: 'amd64.config'
-     run: |
-      [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-      cd openwrt && make defconfig
-     
-     # make V=s -j$(nproc)
-   - name: 下载 dl 库，编译固件
-     working-directory: ./openwrt
-     run: |
-      make download -j8 V=s
-      find dl -size -1024c -exec ls -l {} \;
-      find dl -size -1024c -exec rm -f {} \;
-      make -j$(nproc) V=s
+#   - name: 使用自己的 config
+#     env:
+#        CONFIG_FILE: 'amd64.config'
+#     run: |
+#      [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+#      cd openwrt && make defconfig
+#     
+#     # make V=s -j$(nproc)
+#   - name: 下载 dl 库，编译固件
+#     working-directory: ./openwrt
+#     run: |
+#      make download -j8 V=s
+#      find dl -size -1024c -exec ls -l {} \;
+#      find dl -size -1024c -exec rm -f {} \;
+#      make -j$(nproc) V=s
       
    - name : Upload artifact
      uses: actions/upload-artifact@v3
