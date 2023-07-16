@@ -67,6 +67,13 @@ jobs:
 #      find dl -size -1024c -exec ls -l {} \;
 #      find dl -size -1024c -exec rm -f {} \;
 #      make -j$(nproc) V=s
+
+   - name: Connect GitHub Actions 
+     uses: csexton/debugger-action@master
+     
+   - name: Build firmware
+     working-directory: ./openwrt
+     run: make
       
    - name : Upload artifact
      uses: actions/upload-artifact@v3
